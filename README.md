@@ -48,9 +48,9 @@ Download the latest Apple TV `.ipa` from [Releases](https://github.com/bobsupra/
 ## Latest tvOS Beta
 
 <!-- BEGIN LATEST_BETA -->
-**Beta 3.4.7** is the latest tvOS release.
+**Nuvio TV 3.4.7 – Household Icon with Wordmark** is the latest tvOS release.
 
-[Quick download (.ipa)](https://github.com/bobsupra/NuvioTVOS/releases/download/tvos-beta-3.4.7/NuvioTV-3.4.7-unsigned-release.ipa) · [Read the release notes](https://github.com/bobsupra/NuvioTVOS/releases/tag/tvos-beta-3.4.7) · [Report a bug or suggest an idea](https://github.com/bobsupra/NuvioTVOS/issues/new/choose)
+[Quick download (.ipa)](https://github.com/kpholdings/NuvioTVOS/releases/download/household-icon-text-3.4.7/NuvioTV-3.4.7-household-icon.ipa) · [Read the release notes](https://github.com/kpholdings/NuvioTVOS/releases/tag/household-icon-text-3.4.7) · [Manage notifications](https://github.com/kpholdings/NuvioTVOS/subscription) → choose **Custom → Releases** · [Report a bug or suggest an idea](https://github.com/kpholdings/NuvioTVOS/issues/new/choose)
 <!-- END LATEST_BETA -->
 
 > 🎉 **Thank you for 300+ GitHub Stars!** A huge thank you to everyone in the community for supporting NuvioTVOS and helping us reach 300+ stars!
