@@ -1,0 +1,51 @@
+name: Build household icon IPA
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile tvOS asset catalog
+        run: |
+          set -euxo pipefail
+          mkdir -p build/assets
+          xcrun actool tvosApp/NuvioTV/Images.xcassets \
+            --compile build/assets \
+            --platform appletvos \
+            --minimum-deployment-target 17.4 \
+            --target-device tv \
+            --app-icon AppIcon \
+            --development-region en \
+            --output-partial-info-plist build/asset-info.plist
+          find build/assets -maxdepth 2 -type f -print
+
+      - name: Download and customize NuvioTV 3.4.7
+        run: |
+          set -euxo pipefail
+          curl -fL --retry 3 \
+            -o build/NuvioTV-base.ipa \
+            https://github.com/bobsupra/NuvioTVOS/releases/download/tvos-beta-3.4.7/NuvioTV-3.4.7-unsigned-release.ipa
+          mkdir -p build/ipa
+          ditto -x -k build/NuvioTV-base.ipa build/ipa
+          app="build/ipa/Payload/NuvioTV.app"
+          test -f build/assets/Assets.car
+          cp build/assets/Assets.car "$app/Assets.car"
+          find build/assets -maxdepth 1 -type f \( -name '*.lcr' -o -name '*.png' \) -exec cp {} "$app/" \;
+          cp tvosApp/NuvioTV/Resources/AppIcon.png "$app/AppIcon.png"
+          rm -rf "$app/_CodeSignature" "$app/embedded.mobileprovision"
+          /usr/libexec/PlistBuddy -c 'Set :CFBundleDisplayName Nuvio TV' "$app/Info.plist"
+          ditto -c -k --sequesterRsrc --keepParent build/ipa/Payload build/NuvioTV-3.4.7-household-icon.ipa
+          shasum -a 256 build/NuvioTV-3.4.7-household-icon.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NuvioTV-household-icon
+          path: build/NuvioTV-3.4.7-household-icon.ipa
+          if-no-files-found: error
